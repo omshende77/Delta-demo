@@ -1,0 +1,42 @@
+<% layout("/layouts/boilerplate") %>
+<div class="row mt-3">
+    <div class="col-6 offset-3">
+        <form action="/signup" method="POST" novalidate class="needs-validation">
+            <h1 class="text-center"><b>Sign Up on WanderLust</b></h1>
+            <div class="mb-3">
+                <label for="username" class="form-label">UserName : </label>
+                <input type="text" name="username" id="username" placeholder="Enter username" class="form-control" required>
+                <!-- this div is for mentioning the text under the box used in bootstrp class  -->
+                <div class="valid-feedback">
+                    Username looks Good
+                </div>
+                <div class="invalid-feedback">
+                    Please enter a valid Username
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">E-mail : </label>
+                <input type="email" name="email" id="email" placeholder="Enter Email" class="form-control" required>
+                <!-- this div is for mentioning the text under the box used in bootstrp class  -->
+                <div class="valid-feedback">
+                    Email looks Good
+                </div>
+                <div class="invalid-feedback">
+                    Please enter a valid Email
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password : </label>
+                <input type="password" name="password" id="email" placeholder="Enter password" class="form-control" required>
+                <!-- this div is for mentioning the text under the box used in bootstrp class  -->
+                <div class="valid-feedback">
+                    Password looks Good
+                </div>
+                <div class="invalid-feedback">
+                    Please enter a valid Password
+                </div>
+            </div>
+            <button class="btn btn-success">Sign Up</button>
+        </form>
+    </div>
+</div>

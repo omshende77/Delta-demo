@@ -1,0 +1,83 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="row mt-3">
+    <div class="col-8 offset-3"> 
+            <h1><%= findlist.title %></h1>
+    </div>
+    <div class="card show-card col-6 offset-3 listing-card">
+        <img src="<%= findlist.image.url %>" class="card-img-top show-img" alt="Listing_image">
+        <div class="card-body">
+            <p class="card-text"><strong>Posted by:</strong> <%= findlist.owner.username %><br></p>
+            <p class="card-text"> <%= findlist.description %><br></p>
+            <p class="card-text"> <%= findlist.country %><br></p>
+            <p class="card-text">&#8377;<%= findlist.price.toLocaleString("en-In") %><br></p>
+            <p class="card-text"> <%= findlist.location %><br></p>
+        </div>
+    </div>
+    <% if(currUser && currUser._id.equals(findlist.owner._id)){ %>
+    <div class="btns">
+        <a href="/listings/<%= findlist._id %>/edit" class="btn btn-dark col-1 offset-3 edit-btn">Edit</a>
+        <form method="POST" action="/listings/<%= findlist._id %>?_method=DELETE">
+            <button class="btn btn-dark offset-5">Delete</button>
+        </form>
+    </div>
+    <% } %>
+    <div class="col-8 offset-3 mb-3">
+        <% if(currUser){ %>
+        <hr> 
+        <h4>Leave a review</h4>
+        <form method="POST" action="/listings/<%= findlist._id %>/reviews" novalidate class="needs-validation">
+            <div class="form-group">  
+                <div class="mb-3 mt-3">
+                <label for="rating" class="form-label">Rating</label>
+                <fieldset class="starability-slot"> 
+                <input type="radio" id="no-rate" class="input-no-rate" name="rating" value="1" checked aria-label="No rating." />
+                <input type="radio" id="first-rate1" name="rating" value="1" />
+                <label for="first-rate1" title="Terrible">1 star</label>
+                <input type="radio" id="first-rate2" name="rating" value="2" />
+                <label for="first-rate2" title="Not good">2 stars</label>
+                <input type="radio" id="first-rate3" name="rating" value="3" />
+                <label for="first-rate3" title="Average">3 stars</label>
+                <input type="radio" id="first-rate4" name="rating" value="4" />
+                <label for="first-rate4" title="Very good">4 stars</label>
+                <input type="radio" id="first-rate5" name="rating" value="5" />
+                <label for="first-rate5" title="Amazing">5 stars</label>
+                </fieldset>
+                </div>
+                <div class="mb-3 mt-3">
+                    <label for="comments" class="form-label">Review</label>
+                    <textarea class="form-control" id="comments" name="comments" rows="5" cols="30" required ></textarea>
+                    <div class="invalid-feedback">
+                        Please provide a review.
+                    </div>
+                </div>
+                <button class="btn btn-outline-dark">Submit</button>   
+            </div>
+        </form>
+        <hr>
+        <% } %>
+
+        <% if(findlist.reviews.length > 0) { %>
+        <div class="row">
+            <p><b>All Reviews</b></p>
+            <% for(review of findlist.reviews){ %>
+            <div class="card col-5 ms-3 mb-3"> 
+                <div class="card-body">
+                    <h5 class="card-title"> @<%= review.author.username %></h5>
+                    <p class="starability-result" data-rating="<%= review.rating %>"></p>
+                    <p class="card-text"><%= review.comments %></p>
+                    <p class="card-text"><%= review.rating %> Stars</p>  
+                </div>
+                <% if(currUser && currUser._id.equals(review.author._id)){ %>
+                <form class="mb-3" method="POST" action="/listings/<%= findlist._id %>/reviews/<%= review._id %>?_method=DELETE">
+                    <button class="btn btn-dark mb-3">Delete</button>
+                </form>
+                <% } %>
+            </div>
+        <% } %>
+        </div>
+        <% } %>
+
+        
+    </div>
+</div>
